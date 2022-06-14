@@ -1,6 +1,7 @@
-const ListNode = require('./single-list-node');
+const ListNode = require('./double-list-node');
+console.log(ListNode)
 
-class SingleLinkedList {
+class DoublyLinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
@@ -19,8 +20,8 @@ class SingleLinkedList {
         return this.length;
     }
 
-    createNode(key) {
-        return new ListNode(key)
+    createNode(key, prev = null, next = null) {
+        return new ListNode(key, prev, next);
     }
 
     addNode(key, isTail = false) {
@@ -35,8 +36,10 @@ class SingleLinkedList {
 
         if (isTail) {
             this.tail.next = node;
+            node.prev = this.tail;
             this.tail = node
         } else {
+            this.head.prev = node;
             node.next = this.head;
             this.head = node;
         }
@@ -92,12 +95,17 @@ class SingleLinkedList {
             return this.cleanList();
         }
 
+        this.head.next.prev = null;
         this.head = this.head.next;
         this.length--;
         return this.head;
     }
 
     removeN(key) {
+        if (!this.head) {
+            return this.head;
+        }
+
         let node = this.head;
 
         if (node.value === key) {
@@ -138,25 +146,27 @@ class SingleLinkedList {
         for (let i = 1; i < index; i++) {
             node = node.next;
         }
+
         newNode.next = node.next;
+        newNode.prev = node;
         node.next = newNode;
 
         return this.head;
     }
 }
 
-const singleLinkedList = new SingleLinkedList();
+const doubleLinkedList = new DoublyLinkedList();
 
-console.log(singleLinkedList.addLast(2));
-console.log(singleLinkedList.addLast(3));
-console.log(singleLinkedList.addLast(4));
-console.log(singleLinkedList.addFirst(1));
-console.log(singleLinkedList.getFirst());
-console.log(singleLinkedList.getLast());
-console.log(singleLinkedList.removeLast());
-console.log(singleLinkedList.removeFirst());
-console.log(singleLinkedList.find(5));
-console.log(singleLinkedList.removeN(5));
-console.log(singleLinkedList.isEmpty());
-console.log(singleLinkedList.getListLength());
-console.log(singleLinkedList.insert(6, 2));
+console.log(doubleLinkedList.addLast(2));
+console.log(doubleLinkedList.addLast(3));
+console.log(doubleLinkedList.addLast(4));
+console.log(doubleLinkedList.addFirst(1));
+console.log(doubleLinkedList.getFirst());
+console.log(doubleLinkedList.getLast());
+console.log(doubleLinkedList.removeLast());
+console.log(doubleLinkedList.removeFirst());
+console.log(doubleLinkedList.find(5));
+console.log(doubleLinkedList.removeN(5));
+console.log(doubleLinkedList.isEmpty());
+console.log(doubleLinkedList.getListLength());
+console.log(doubleLinkedList.insert(6, 2));

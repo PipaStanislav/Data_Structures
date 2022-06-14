@@ -1,8 +1,8 @@
-class ListNode {
+class SingleListNode {
     constructor(value, next = null) {
         this.value = value;
         this.next = next;
     }
 }
 
-module.exports = ListNode;
+module.exports = SingleListNode;
